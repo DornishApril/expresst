@@ -1,7 +1,8 @@
+const EventEmitter = require('events');
 const fs = require('fs');
 
 const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/../data/tours-simple.json`)
+  fs.readFileSync(`${__dirname}/../data/tours-simple.json`),
 );
 
 exports.checkID = (req, res, next, val) => {
@@ -19,7 +20,7 @@ exports.checkID = (req, res, next, val) => {
 exports.checkBody = (req, res, next) => {
   console.log(req);
   console.log(
-    `Checking body. . . . name: ${req.body.name} price:${req.body.price}\n\n`
+    `Checking body. . . . name: ${req.body.name} price:${req.body.price}\n\n`,
   );
   if (!req.body.name || !req.body.price) {
     return res.status(400).json({
@@ -67,6 +68,19 @@ exports.searchTour = (req, res) => {
   });
 };
 
+class NewTour extends EventEmitter {
+  constructor() {
+    super();
+  }
+}
+
+const tourAdded = new NewTour();
+
+tourAdded.on('added', (tour) => {
+  console.log('New Tour Added!');
+  console.log(JSON.stringify(tour));
+});
+
 exports.addTour = (req, res) => {
   console.log('request received');
   const newID = tours[tours.length - 1].id + 1;
@@ -83,8 +97,10 @@ exports.addTour = (req, res) => {
           tour: newTour,
         },
       });
-    }
+    },
   );
+  tourAdded.emit('added',newTour);
+  
   //res.send('Done');
 };
 
