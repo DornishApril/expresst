@@ -1,9 +1,7 @@
 const EventEmitter = require('events');
 const fs = require('fs');
 
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/../data/tours-simple.json`),
-);
+const tours = JSON.parse(fs.readFileSync(`./data/tours-simple.json`));
 
 exports.checkID = (req, res, next, val) => {
   console.log(`Tour id is ${val}`);
@@ -50,22 +48,47 @@ exports.searchTour = (req, res) => {
 
   const id = req.params.id * 1;
 
-  const tour = tours.find((el) => el.id === id);
+  //const tour = tours.find((el) => el.id === id);
 
-  if (!tour) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid ID',
-    });
-  }
+  const searchT = async () => {
+    try {
+      let x = await tours.find((el) => el.id === id);
+      return x;
+    } catch (err) {
+      console.log(err);
+    }
+    
+  };
 
-  res.status(200).json({
-    status: 'success',
-    results: tours.length,
-    data: {
-      tour,
-    },
-  });
+  (async () =>
+  {
+    try
+    {
+      
+      const tour = await searchT();
+      if (!tour) {
+        return res.status(404).json({
+          status: 'fail',
+          message: 'Invalid ID',
+        });
+      }
+
+      res.status(200).json({
+        status: 'success',
+        results: tours.length,
+        data: {
+          tour,
+        },
+      });
+    }
+    catch (err)
+    {
+      console.log(err);
+    }
+    
+  })();
+
+  
 };
 
 class NewTour extends EventEmitter {
@@ -99,8 +122,8 @@ exports.addTour = (req, res) => {
       });
     },
   );
-  tourAdded.emit('added',newTour);
-  
+  tourAdded.emit('added', newTour);
+
   //res.send('Done');
 };
 
