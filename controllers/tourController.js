@@ -50,22 +50,9 @@ exports.searchTour = (req, res) => {
 
   //const tour = tours.find((el) => el.id === id);
 
-  const searchT = async () => {
+  (async () => {
     try {
-      let x = await tours.find((el) => el.id === id);
-      return x;
-    } catch (err) {
-      console.log(err);
-    }
-    
-  };
-
-  (async () =>
-  {
-    try
-    {
-      
-      const tour = await searchT();
+      const tour = await tours.find((el) => el.id === id);
       if (!tour) {
         return res.status(404).json({
           status: 'fail',
@@ -78,17 +65,41 @@ exports.searchTour = (req, res) => {
         results: tours.length,
         data: {
           tour,
-        },
+        },Z
       });
-    }
-    catch (err)
-    {
+    } catch (err) {
       console.log(err);
     }
-    
   })();
 
-  
+
+  // (async () =>
+  // {
+  //   try
+  //   {
+
+  //     const tour = await searchT();
+  //     if (!tour) {
+  //       return res.status(404).json({
+  //         status: 'fail',
+  //         message: 'Invalid ID',
+  //       });
+  //     }
+
+  //     res.status(200).json({
+  //       status: 'success',
+  //       results: tours.length,
+  //       data: {
+  //         tour,
+  //       },
+  //     });
+  //   }
+  //   catch (err)
+  //   {
+  //     console.log(err);
+  //   }
+
+  // })();
 };
 
 class NewTour extends EventEmitter {
