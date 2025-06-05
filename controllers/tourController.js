@@ -14,10 +14,24 @@ exports.searchTour = (req, res) => {
   });
 };
 
-exports.addTour = (req, res) => {
-  res.status(201).json({
-    status: 'success',
-  });
+exports.addTour = async (req, res) => {
+  try {
+    const newTour = await Tour.create(req.body);
+    console.log(req.body);
+
+    res.status(201).json({
+      status: 'success',
+      data: {
+        tour: newTour,
+      },
+    });
+  } catch (err) {
+    console.log(`the error issss ----- ${err}`);
+    res.status(400).json({
+      status: 'fail',
+      message: err.message,
+    });
+  }
 };
 
 exports.updateTour = (req, res) => {
