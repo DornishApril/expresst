@@ -1,0 +1,71 @@
+Get All Tours
+
+Method: GET
+URL: http://localhost:3000/api/v1/tours
+Description: Retrieves all tours from the database
+Example Response:
+
+json{
+  "status": "success",
+  "length": 5,
+  "data": {
+    "tours": [...]
+  }
+}
+2. Create New Tour
+
+Method: POST
+URL: http://localhost:3000/api/v1/tours
+Description: Creates a new tour
+Content-Type: application/json
+Example Request Body:
+
+json{
+  "name": "The Forest Hiker",
+  "duration": 5,
+  "maxGroupSize": 25,
+  "difficulty": "easy",
+  "price": 397,
+  "summary": "Breathtaking hike through the Canadian Banff National Park",
+  "description": "Beautiful forest adventure..."
+}
+3. Get Single Tour
+
+Method: GET
+URL: http://localhost:3000/api/v1/tours/:id
+Description: Retrieves a specific tour by ID
+Example URLs:
+
+http://localhost:3000/api/v1/tours/507f1f77bcf86cd799439011
+http://localhost:3000/api/v1/tours/60d5ecb74f8c4c001f647c8b
+http://localhost:3000/api/v1/tours/61a5e2b8f1d2c3e4f5a6b7c8
+
+
+
+4. Update Tour
+
+Method: PATCH
+URL: http://localhost:3000/api/v1/tours/:id
+Description: Updates a specific tour by ID
+Content-Type: application/json
+Example URLs:
+
+http://localhost:3000/api/v1/tours/507f1f77bcf86cd799439011
+http://localhost:3000/api/v1/tours/60d5ecb74f8c4c001f647c8b
+
+
+Example Request Body:
+
+json{
+  "price": 450,
+  "maxGroupSize": 30
+}
+5. Delete Tour
+
+Method: DELETE
+URL: http://localhost:3000/api/v1/tours/:id
+Description: Deletes a specific tour by ID
+Example URLs:
+
+http://localhost:3000/api/v1/tours/507f1f77bcf86cd799439011
+http://localhost:3000/api/v1/tours/60d5ecb74f8c4c001f647c8b

@@ -44,7 +44,7 @@ exports.searchTour = async (req, res) => {
 exports.addTour = async (req, res) => {
   try {
     const newTour = await Tour.create(req.body);
-    console.log(req.body);
+    //console.log(req.body);
 
     res.status(201).json({
       status: 'success',
@@ -85,7 +85,7 @@ exports.updateTour = async (req, res) => {
 exports.deleteTour = async (req, res) => {
   try {
     await Tour.findByIdAndDelete(req.params.id);
-    console.log(req);
+    //console.log(req);
     res.status(200).json({
       status: 'success',
       data: {
