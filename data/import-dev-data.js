@@ -22,6 +22,7 @@ const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8'),
 );
 const updatedTours = tours.map((tour) => {
+  // eslint-disable-next-line node/no-unsupported-features/es-syntax
   const { id, ...rest } = tour;
   return rest;
 });
