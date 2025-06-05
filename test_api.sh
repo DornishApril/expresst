@@ -2,52 +2,86 @@
 
 BASE_URL="http://localhost:3000/api/v1/tours"
 
-echo "=== Testing Tour API ==="
+echo "=== SIMPLE API VALIDATION TESTS ==="
+echo ""
 
-# Test 1: Get all tours
-echo "1. Getting all tours..."
-curl -s -X GET $BASE_URL
-echo -e "\n"
-
-# Test 2: Create a new tour
-echo -e "\n2. Creating a new tour..."
+# Test 1: Basic functionality
+echo "TEST 1: Create and Validate Tour"
+echo "Creating tour..."
 RESPONSE=$(curl -s -X POST $BASE_URL \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "Test Adventure Tourrrr",
-    "price": 299,
-    "review": "A fantastic test tour for API testing purposes"
+    "name": "Validation Test Tour",
+    "price": 399,
+    "review": "Testing API validation"
   }')
 
-echo $RESPONSE
-echo -e "\n"
+echo "Response: $RESPONSE"
 
-# Extract tour ID from response (basic extraction without jq)
-TOUR_ID=$(echo $RESPONSE | grep -o '"_id":"[^"]*"' | cut -d'"' -f4)
-echo "Created tour ID: $TOUR_ID"
-
-# Test 3: Get single tour
-if [ ! -z "$TOUR_ID" ]; then
-    echo -e "\n3. Getting single tour..."
-    curl -s -X GET $BASE_URL/$TOUR_ID
-    echo -e "\n"
+# Check if creation was successful
+if echo "$RESPONSE" | grep -q '"status":"success"'; then
+    echo "✓ PASS: Tour created successfully"
     
-    # Test 4: Update tour
-    echo -e "\n4. Updating tour..."
-    curl -s -X PATCH $BASE_URL/$TOUR_ID \
-      -H "Content-Type: application/json" \
-      -d '{
-        "price": 399,
-        "review": "Updated review: Even better than expected!"
-      }'
-    echo -e "\n"
+    # Extract ID
+    TOUR_ID=$(echo $RESPONSE | grep -o '"_id":"[^"]*"' | cut -d'"' -f4)
+    echo "Tour ID: $TOUR_ID"
     
-    # Test 5: Delete tour
-    echo -e "\n5. Deleting tour..."
-    curl -s -X DELETE $BASE_URL/$TOUR_ID
-    echo -e "\n"
+    # Test getting the tour
+    echo ""
+    echo "Getting created tour..."
+    GET_RESPONSE=$(curl -s -X GET $BASE_URL/$TOUR_ID)
+    echo "Response: $GET_RESPONSE"
+    
+    if echo "$GET_RESPONSE" | grep -q "Validation Test Tour"; then
+        echo "✓ PASS: Tour retrieved successfully with correct name"
+    else
+        echo "✗ FAIL: Tour name not found in response"
+    fi
+    
+    # Clean up - delete the tour
+    echo ""
+    echo "Cleaning up - deleting tour..."
+    DELETE_RESPONSE=$(curl -s -X DELETE $BASE_URL/$TOUR_ID)
+    if echo "$DELETE_RESPONSE" | grep -q '"status":"success"'; then
+        echo "✓ PASS: Tour deleted successfully"
+    else
+        echo "✗ FAIL: Tour deletion failed"
+    fi
+    
 else
-    echo "Could not extract tour ID - skipping individual tour tests"
+    echo "✗ FAIL: Tour creation failed"
+    echo "Response: $RESPONSE"
 fi
 
-echo -e "\n=== Testing Complete ==="
+echo ""
+echo "TEST 2: Error Handling - Missing Fields"
+echo "Creating tour with missing price..."
+ERROR_RESPONSE=$(curl -s -X POST $BASE_URL \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Incomplete Tour",
+    "review": "Missing price field"
+  }')
+
+echo "Response: $ERROR_RESPONSE"
+
+if echo "$ERROR_RESPONSE" | grep -q '"status":"fail"\|"status":"Error"'; then
+    echo "✓ PASS: Correctly rejected tour with missing fields"
+else
+    echo "✗ FAIL: Should have rejected tour with missing price"
+fi
+
+echo ""
+echo "TEST 3: Error Handling - Invalid ID"
+echo "Trying to get tour with invalid ID..."
+INVALID_RESPONSE=$(curl -s -X GET $BASE_URL/invalid-id-123)
+echo "Response: $INVALID_RESPONSE"
+
+if echo "$INVALID_RESPONSE" | grep -q '"status":"Not Found"\|"status":"Error"\|"status":"fail"'; then
+    echo "✓ PASS: Correctly handled invalid ID"
+else
+    echo "✗ FAIL: Should have returned error for invalid ID"
+fi
+
+echo ""
+echo "=== VALIDATION TESTS COMPLETE ==="
