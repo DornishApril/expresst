@@ -180,3 +180,11 @@ exports.deleteTour = (req, res) => {
     },
   });
 };
+
+function whatever() {}
+
+whatever('mab').then().catch();
+
+const x = 5;
+
+x = 6;
