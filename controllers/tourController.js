@@ -1,7 +1,8 @@
 const EventEmitter = require('events');
 const fs = require('fs');
+const Tour = require('./../models/tourModel');
 
-const tours = JSON.parse(fs.readFileSync(`./data/tours-simple.json`));
+// const tours = JSON.parse(fs.readFileSync(`./data/tours-simple.json`));
 
 exports.checkID = (req, res, next, val) => {
   console.log(`Tour id is ${val}`);
@@ -65,13 +66,13 @@ exports.searchTour = (req, res) => {
         results: tours.length,
         data: {
           tour,
-        },Z
+        },
+        Z,
       });
     } catch (err) {
       console.log(err);
     }
   })();
-
 
   // (async () =>
   // {

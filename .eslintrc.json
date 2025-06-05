@@ -18,7 +18,6 @@
     "prefer-destructuring": ["error", { "object": true, "array": false }],
     "no-unused-vars": ["error", { "argsIgnorePattern": "req|res|next|val" }],
     "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 1 }],
-    "indent": ["error", 2, { "MemberExpression": 1 }],
-    "eslint.workingDirectories": ["./backend", "./"]
+    "indent": ["error", 2, { "MemberExpression": 1 }]
   }
 }
