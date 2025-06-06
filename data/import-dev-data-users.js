@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const fs = require('fs');
-const Tour = require('../models/tourModel');
+const User = require('../models/userModel');
 
 dotenv.config({ path: './config.env' });
 
@@ -18,18 +18,13 @@ mongoose.set('strictQuery', false);
 
 //READ JSON FILE
 
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8'),
+const users = JSON.parse(
+  fs.readFileSync(`${__dirname}/users-simple.json`, 'utf-8'),
 );
-const updatedTours = tours.map((tour) => {
-  // eslint-disable-next-line node/no-unsupported-features/es-syntax
-  const { id, ...rest } = tour;
-  return rest;
-});
-console.log(tours);
+
 const importData = async () => {
   try {
-    await Tour.create(updatedTours);
+    await User.create(users);
     console.log('Data successfully loaded');
   } catch (err) {
     console.log(err);
@@ -41,7 +36,7 @@ const importData = async () => {
 
 const deleteData = async () => {
   try {
-    await Tour.deleteMany();
+    await User.deleteMany();
     console.log('Data successfully !!DELETE!!');
     process.exit();
   } catch (err) {

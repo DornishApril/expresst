@@ -1,0 +1,52 @@
+[
+  {
+    "name": "rahim",
+    "age": 90,
+    "email": "rahim@email.com"
+  },
+  {
+    "name": "salma",
+    "age": 45,
+    "email": "salma@email.com"
+  },
+  {
+    "name": "jamal",
+    "age": 32,
+    "email": "jamal@email.com"
+  },
+  {
+    "name": "nazia",
+    "age": 27,
+    "email": "nazia@email.com"
+  },
+  {
+    "name": "kabir",
+    "age": 64,
+    "email": "kabir@email.com"
+  },
+  {
+    "name": "fatima",
+    "age": 38,
+    "email": "fatima@email.com"
+  },
+  {
+    "name": "aziz",
+    "age": 51,
+    "email": "aziz@email.com"
+  },
+  {
+    "name": "samina",
+    "age": 29,
+    "email": "samina@email.com"
+  },
+  {
+    "name": "moin",
+    "age": 73,
+    "email": "moin@email.com"
+  },
+  {
+    "name": "hiba",
+    "age": 22,
+    "email": "hiba@email.com"
+  }
+]
