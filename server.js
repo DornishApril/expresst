@@ -17,6 +17,7 @@ mongoose
   })
   .catch((err) => {
     console.log('Error! Cant Connect to the Database!');
+    console.log(err);
   });
 mongoose.set('strictQuery', false);
 
