@@ -1,9 +1,7 @@
 /* eslint-disable node/no-unsupported-features/es-syntax */
-const mongoose = require('mongoose');
 const Tour = require('../models/tourModel');
 
 // const tours = JSON.parse(fs.readFileSync(`./data/tours-simple.json`));
-const DB = process.env.DATABASE.replace('<PASSWORD>', process.env.DB_PASSWORD);
 
 exports.getAllTours = async (req, res) => {
   try {
