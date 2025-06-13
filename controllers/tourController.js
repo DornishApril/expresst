@@ -17,31 +17,21 @@ exports.getAllTours = async (req, res) => {
 
     // const tours = await Tour.find();
 
-    await mongoose
-      .connect(DB)
-      .then(async () => {
-        console.log('DB connection successful');
-        const tours = await Tour.find(queryObj);
-        console.log(tours);
+    const tours = await Tour.find(queryObj);
 
-        // const tours = await Tour.find()
-        //   .where('duration')
-        //   .equals(5)
-        //   .where('difficulty')
-        //   .equals('easy');
+    // const tours = await Tour.find()
+    //   .where('duration')
+    //   .equals(5)
+    //   .where('difficulty')
+    //   .equals('easy');
 
-        res.status(200).json({
-          status: 'success',
-          length: tours.length,
-          data: {
-            tours,
-          },
-        });
-      })
-      .catch((err) => {
-        console.log('Error! Cant Connect to the Database!');
-      });
-    mongoose.set('strictQuery', false);
+    res.status(200).json({
+      status: 'success',
+      length: tours.length,
+      data: {
+        tours,
+      },
+    });
   } catch (err) {
     console.log(err.message);
     res.status(400).json({
