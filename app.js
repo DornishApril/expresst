@@ -39,7 +39,7 @@ app.use(express.static(`./public`));
 //MOUNTING
 app.get('/', (req, res) => {
   res.send(`
-    <h1>Natours API</h1>
+    <h1>Natours API- Building towards Excellence</h1>
     <p>API endpoints:</p>
     <ul>
       <li><a href="/api/v1/tours">/api/v1/tours</a></li>
