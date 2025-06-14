@@ -10,14 +10,19 @@ const app = require('./app');
 const DB = process.env.DATABASE.replace('<PASSWORD>', process.env.DB_PASSWORD);
 //console.log(DB);
 
-mongoose.connect(DB).then(() => {
-  console.log('DB connection successful');
-});
+mongoose
+  .connect(DB)
+  .then(() => {
+    console.log('DB connection successful');
+  })
+  .catch((err) => {
+    console.error('DB connection failed:', err);
+  });
 mongoose.set('strictQuery', false);
 
 const PORT = process.env.PORT || 3000;
 
-if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+if (!process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`App running on port ${PORT}`);
   });
