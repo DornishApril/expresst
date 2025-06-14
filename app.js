@@ -1,3 +1,5 @@
+//to strictly follow the tutorial
+
 const express = require('express');
 const fs = require('fs');
 const { get } = require('http');
